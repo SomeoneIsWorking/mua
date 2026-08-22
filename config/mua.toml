@@ -1,0 +1,13 @@
+[title]
+name = "Marvel Ultimate Alliance Gold Edition"
+title_id = "415607DA"
+media_id = "5A20A6D4"
+disc_sha256 = "a994dbf1359686797671eb1e198d7e1124ec4ec3f220fc6a672daac68d6b54c7"
+xex_sha256 = "06d1d7811e1668a5c16afef5102ca59b00684dc1ea6184849418f59f022b86b7"
+image_sha256 = "fbf7a09b39e1c22ba98734ad2007a1a8890da678e9ad5187013b64b03388f117"
+
+[image]
+base = 0x82000000
+size = 0x00D00000
+entry = 0x824806D8
+machine = "IMAGE_FILE_MACHINE_POWERPCBE"

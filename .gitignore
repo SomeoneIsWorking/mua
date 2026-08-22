@@ -1,0 +1,10 @@
+.env
+build/
+scratch/
+roms/
+*.iso
+*.xex
+*.pe
+src/generated/
+.ruff_cache/
+__pycache__/
