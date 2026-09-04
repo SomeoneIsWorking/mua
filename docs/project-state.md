@@ -25,6 +25,16 @@ S003 is the current focus: connect the authenticated Gold image to the shared
 | S008 | Representative interactive gameplay is conformant and within the host performance budget | missing | S005, S007 | G001, G003 |
 | S009 | The offline generated-PPC pipeline and remaining static product surfaces are absent | verified | — | G001 |
 | S010 | Fresh-clone launcher and asset-free desktop/mobile packages provide player setup | missing | S007, S008 | G001, G003 |
+| S011 | Asset-free CI reports the current migration-policy boundary without claiming product execution | partial | S009 | G001, G003 |
+
+## CI and platform coverage
+
+| Platform | Workflow coverage | Product support claim and exact gap |
+| --- | --- | --- |
+| Linux | Policy-only job runs provisioning, structure, project-authority, and unavailable-product configuration checks | No gameplay/product execution is claimed; `x360port` has not published the required runtime boundary |
+| Windows | No job | No supported MUA product exists to build or test |
+| macOS | No job | No supported MUA product exists to build or test |
+| Android | No job | No Android package or supported MUA runtime exists |
 
 ## Capability details
 
@@ -89,3 +99,13 @@ code.
 
 Missing capability: provide the zero-argument launcher, no-terminal first-run
 selection, OS user-data storage, and asset-free signed packages.
+
+### S011 — asset-free CI
+
+The Linux workflow checks the real asset-free migration-policy boundary from
+full-history, read-only checkouts. It does not request the user's disc or claim
+that MUA executes gameplay.
+
+Gap: the first hosted run is pending landing, and product jobs on all four
+platforms remain unavailable until MUA has a supported `x360port` runtime and
+the corresponding native/package boundary.
