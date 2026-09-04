@@ -29,8 +29,8 @@ project-goals list is verified.
 The dependency direction is:
 
 ```text
-MUA title adapter -> shared x360port -> Xenia dynarec
-                  -> shared alchemy   -> native Alchemy engine services
+MUA title policy -> alchemy/x360 -> shared x360port -> Xenia dynarec
+                 -> alchemy/shared
 ```
 
 MUA never depends on Gears. Shared code contains no MUA addresses or behavior.
@@ -38,12 +38,15 @@ MUA never depends on Gears. Shared code contains no MUA addresses or behavior.
 device-memory callbacks, dynarec dispatch, and native/original-call boundary.
 MUA owns exact identity, title addresses, native overrides, save namespace,
 input meaning, title-specific Alchemy policy, and conformance evidence.
-`shared/alchemy` is the intended engine owner for both X-Men 2 and MUA, but it is
-not a shared runtime engine today and MUA does not currently consume one. X-Men
-2 establishes and verifies the first common engine contracts. When that
-Alchemy-specific gate lifts, MUA reuses and extends those contracts rather than
-building a second title-local Alchemy engine. MUA is not a UE3 title and never
-depends on `x360ue3` or `GearsUE3`.
+`shared/alchemy` is one intended engine repository for both X-Men 2 and MUA: its
+neutral `shared` component has no CPU-framework dependency, while its optional
+`x86` and `x360` adapters consume `x86port` and `x360port` respectively. MUA
+links only the x360 adapter and keeps exact addresses and policy here. X-Men 2
+establishes and verifies the first common engine and x86-adapter contracts.
+When that Alchemy-specific gate lifts, MUA adds the x360 adapter rather than a
+second title-local engine. Alchemy does not own both platform frameworks as
+submodules. MUA is not a UE3 title and never depends on `x360ue3` or
+`GearsUE3`.
 
 ## Break-first migration and first discriminator
 

@@ -5,6 +5,6 @@ roms/
 *.iso
 *.xex
 *.pe
-src/generated/
 .ruff_cache/
+.venv/
 __pycache__/

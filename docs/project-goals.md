@@ -11,8 +11,9 @@ Success conditions:
   interpreter in its build, link, selector, or fallback surfaces.
 - `x360port` authenticates and maps the exact image, executes all non-native
   guest paths through Xenia, and provides image-aware native/original calls.
-- Native Alchemy engine services consume the contracts established in
-  `shared/alchemy` by X-Men 2; MUA does not create a parallel title-local engine.
+- Native Alchemy engine services consume the neutral contracts established in
+  `shared/alchemy` by X-Men 2 through Alchemy's x360 adapter over `x360port`;
+  MUA does not create a parallel title-local engine.
 - A fresh checkout provisions from the user's disc and zero-argument `run.sh`
   launches the intended product.
 - Representative interactive gameplay passes CPU/memory/timing/device and
@@ -32,6 +33,9 @@ Success conditions:
 - Shared code contains no MUA addresses, hashes, or game policy.
 - `shared/alchemy` exposes only title-neutral contracts proven by both games;
   MUA-specific behavior remains in this repository.
+- Alchemy's neutral core has no platform-runtime dependency. MUA composes and
+  pins the sibling Alchemy and `x360port` repositories and links only the x360
+  adapter; Alchemy does not vendor both x86 and x360 frameworks.
 - MUA is an Alchemy title and has no dependency on `x360ue3` or `GearsUE3`;
   only the lower `x360port` platform runtime is shared with Gears.
 
