@@ -12,15 +12,12 @@ The supplied 5,952,126,976-byte disc has SHA-256
 Its retail AES/LZX XEX becomes a 13,631,488-byte PowerPCBE image at
 `0x82000000`, entry `0x824806D8`.
 
-The existing Xenon analysis path found 51,015 functions, all eight save/restore
-helpers, and 365 jump tables. The first strict recompilation pass identified:
-
-- 13 unsupported instructions: six `lhbrx`, seven `bso`;
-- 82 outside-function switch targets across ten tables, requiring
-  classification rather than blind function seeding;
-- 30 of 196 imports without a reusable implementation;
-- 89 of 91 Gears title-address references absent from this image, proving the
-  host/title separation is mandatory.
+Title-neutral XEX inspection identifies ten sections, 206 logical imports (196
+functions and ten variables), and all eight save/restore helpers. Binary
+comparison also found 89 of 91 Gears title-address references absent from this
+image, proving that shared Xbox execution cannot contain Gears policy or
+addresses. These are runtime-image and ownership facts for `xenonport`; no
+offline guest-code analysis or generation is part of the product plan.
 
 A bounded, isolated, headless Xenia observation mounted `default.xex`, started
 the main guest thread, issued 1,210 1280x720 presents, accepted scripted Start/A

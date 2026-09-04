@@ -1,33 +1,42 @@
-# Marvel Ultimate Alliance — native Xbox 360 recompilation port
+# Marvel: Ultimate Alliance — native/dynarec port
 
-This repository is the title layer for a native PC port of **Marvel Ultimate
-Alliance: Gold Edition**. It consumes two peer shared projects:
+This project targets the Xbox 360 Gold Edition of **Marvel: Ultimate Alliance**.
+Its intended architecture is MUA-owned native behavior plus runtime guest PPC
+execution through `xenonport` and Xenia's dynarec, with native Alchemy engine
+services shared through `shared/alchemy`. That common runtime engine does not
+exist yet and MUA does not currently consume it. The project is not playable
+and is deferred until X-Men 2's complete project goals are verified.
 
-- `xenon-host` for the Xbox 360 ABI, loader, services, input, audio, and Xenos
-  presentation;
-- `alchemy` for the game's engine formats and platform-neutral semantics.
+The repository contains no game code or assets. Supply your own exact Gold disc
+image through `.env` (`MUA_X360_ISO`) or one unambiguous ignored file under
+`roms/`.
 
-It does not contain or download game code or assets. Supply your own disc image
-through `.env` (`MUA_X360_ISO`) or place one unambiguous ISO under ignored
-`roms/` once the launcher lands.
+## Current state
 
-## Current milestone
+The supplied disc, raw XEX, execution metadata, decrypted image, sections,
+imports, and ABI helpers have been validated from one title profile. A bounded
+headless Xenia observation reached the retail menu, but that is compatibility
+evidence rather than native-port conformance. The gameplay product and
+`xenonport` executor do not exist yet.
 
-The exact supplied build has been inventoried and observed reaching its retail
-main menu in a bounded headless Xenia run. Its title profile now compiles from
-`config/mua.toml` into the title-neutral `xenon-host` identity contract, without
-copying a second set of hashes or addresses into C++. The XEX decrypts and
-analyses through the existing Xenon toolchain. The next executable milestone is
-a locally generated module entering through `xenon-host` and trapping at the
-first real missing service.
+After that deferral lifts, the first implementation discriminator is to execute the exact Gold XEX entry
+`0x824806D8` through Xenia's dynarec until the first named missing service. A
+representative interactive gameplay gate follows before any migration is
+complete.
 
-The current contract milestone builds with:
+See [project state](docs/project-state.md) for intended features and honest
+coverage, [project goals](docs/project-goals.md) for completion conditions, and
+the [codemap](docs/codemap.md) for subsystem ownership.
 
-```sh
-CXX=clang++ cmake -S . -B scratch/build -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build scratch/build -j$(nproc)
-ctest --test-dir scratch/build --output-on-failure
-```
+## Provision exact media
 
-This is not playable yet. `docs/codemap.md` names the implemented surface and
-the remaining gaps without treating recognition or compilation as support.
+The in-flight `tools/provision.py` path resolves an explicit argument, then
+`MUA_X360_ISO` from environment/`.env`, then one supported ignored disc image.
+It validates the complete disc and XEX identity before preserving `default.xex`,
+`image.bin`, and `inspection.json` under the content-addressed ignored
+provisioning directory. These are runtime inputs for `xenonport`; they are not
+inputs to a static code generator.
+
+No launcher or playable build is claimed yet. When it lands, zero-argument
+`./run.sh` will provision and launch the native/dynarec product without running
+tests or requiring maintainer-only RE tools.
