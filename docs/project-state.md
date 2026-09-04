@@ -8,8 +8,8 @@ same original disc, not an offline-generated guest-code executable.
 
 ## Current focus
 
-S009 is the current focus: preserve exact media/provisioning evidence, then
-delete the remaining static-product surfaces before `x360port` implementation.
+S003 is the current focus: connect the authenticated Gold image to the shared
+`x360port` executor after the static product path was removed.
 
 ## Capability inventory
 
@@ -20,10 +20,10 @@ delete the remaining static-product surfaces before `x360port` implementation.
 | S003 | `x360port` maps the image and executes entry `0x824806D8` through Xenia's dynarec | missing | S001, S009 | G001, G002 |
 | S004 | Runtime imports and Xbox services advance from the first named missing service | missing | S003 | G001, G002 |
 | S005 | MUA-native override and original-call dispatch works through the dynarec | missing | S003 | G001, G002 |
-| S006 | MUA consumes the Alchemy engine contracts established in `shared/alchemy` by X-Men 2 | missing | X-Men 2 complete goals | G001, G002, G003 |
+| S006 | MUA consumes Alchemy's neutral contracts through its x360 adapter over `x360port` | missing | X-Men 2 complete goals | G001, G002, G003 |
 | S007 | Native rendering, audio, input, configuration, saves, and platform composition are implemented | missing | S004, S006 | G003 |
 | S008 | Representative interactive gameplay is conformant and within the host performance budget | missing | S005, S007 | G001, G003 |
-| S009 | The offline generated-PPC pipeline and remaining static product surfaces are absent | partial | — | G001 |
+| S009 | The offline generated-PPC pipeline and remaining static product surfaces are absent | verified | — | G001 |
 | S010 | Fresh-clone launcher and asset-free desktop/mobile packages provide player setup | missing | S007, S008 | G001, G003 |
 
 ## Capability details
@@ -61,8 +61,9 @@ changes.
 
 Missing capability: `shared/alchemy` is not yet a proven runtime engine and MUA
 does not consume it. X-Men 2 must first establish verified title-neutral engine
-contracts; MUA then reuses and extends those contracts without moving
-title-specific policy into the shared repository.
+contracts. MUA then links Alchemy's x360 adapter over `x360port`, reuses and
+extends the neutral contracts, and keeps title identity, addresses, and policy
+in this repository. The neutral core never depends on a platform runtime.
 
 ### S007 — native host surface
 
@@ -77,11 +78,12 @@ released host.
 
 ### S009 — static path removal
 
-Static-only untracked tools and generated scratch artifacts were removed. Gap:
-tracked CMake/documentation and any retained source dependencies still need a
-code-phase audit and deletion before S003; do not regenerate, build, or run
-them. Preserve the independently verified media identity and provisioner
-contract rather than the static execution path.
+Evidence: the generated title-profile header/body, profile generator, generated
+source ignore path, static title library/tests, old shared-host dependency, and
+obsolete cleanup tool were deleted. CMake now exposes one product target that
+fails only at the named missing `x360port` title-adapter boundary. The remaining
+profile is runtime identity data consumed by provisioning, not generated guest
+code.
 
 ### S010 — player delivery
 

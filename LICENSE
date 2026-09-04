@@ -24,5 +24,5 @@ SOFTWARE.
 
 This license covers original code in this repository only. It does not cover
 Marvel Ultimate Alliance, its executable, assets, or data. Those are not
-distributed here; generated recompilation output is produced locally from a
-user-supplied copy and remains ignored.
+distributed here. The product reads a user-supplied copy at runtime; no derived
+guest-code corpus is generated or distributed.

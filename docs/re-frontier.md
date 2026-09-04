@@ -23,19 +23,19 @@ project status.
 - notes:
 
 ### runtime-image — Reproduce the exact runtime XEX image
-- status: re-verified
+- status: re-partial
 - deps: media-identity
 - evidence: The current title-neutral inspector reproduces the exact decrypted image, base, entry, sections, imports, and ABI helpers consumed by provisioning.
-- where: tools/provision.py; docs/info/instruments/003-xenonrecomp-xex-inspect.md
-- gap:
-- notes: Preserve this contract while moving its title-neutral owner into x360port; it does not authorize static guest-code emission.
+- where: tools/provision.py; intended x360port x360-xex-inspect command
+- gap: Implement the already validated machine-readable inspection contract in x360port and re-run the real-disc discriminator through that owner.
+- notes: The previous measurement remains exact-image evidence, not a product dependency.
 
 ### static-product-removal — Delete static execution before dynarec work
-- status: in-progress
+- status: re-verified
 - deps: runtime-image
-- evidence: Static-only untracked generated scratch artifacts and tools were removed; exact media/image evidence remains preserved.
+- evidence: The generated title profile, generator, generated-source path, static title library/tests, shared static-host dependency, and obsolete cleanup tool were deleted; CMake now fails only at the explicit missing x360port title-adapter boundary.
 - where: CMakeLists.txt; project tooling and documentation; intended shared x360port XEX parser
-- gap: Delete every remaining static translator dependency, generated module/function map, switch-target input, static selector/configuration/test, and stale methodology. Move the reusable checked-XEX parser contract to x360port rather than retaining a dependency on the static recompiler repository.
+- gap:
 - notes: The product may fail only at one explicit missing x360port executor boundary. Static execution is never a bridge or oracle.
 
 ### dynarec-entry — Execute the Gold entry through Xenia
