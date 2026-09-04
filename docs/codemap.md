@@ -21,3 +21,4 @@ This map owns subsystem placement only. Status belongs in
 | Configuration ingestion and typed immutable settings | MUA config owner | Planned config module | Only this owner may read environment/CLI/config files |
 | Product diagnostics | Lucent-backed logging owner | Planned logging adapter | One adapter; product modules do not write stderr directly |
 | Differential and conformance evidence | Test harness | `tests/`, `docs/re-frontier.md` | Tests using shipping owners plus independent oracle |
+| Asset-free CI orchestration and platform applicability | Repository automation | `.github/workflows/ci.yml` | Keep hosted checks limited to implemented asset-free boundaries; platform/product gaps remain in `docs/project-state.md` |

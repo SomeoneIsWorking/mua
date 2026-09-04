@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# MUA is an Xbox 360 desktop-port migration with no Android package or
+# published x360port runtime. The substantive asset-free boundary is the
+# title-media provisioning and ownership verifier; no gameplay job is claimed.
+jobs:
+  policy:
+    name: Asset-free migration policy (Linux)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: x360/mua
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout the pinned shared harness
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: SomeoneIsWorking/re-harness
+          ref: d9e05ab50880a9ace09550f166c8d8f6f49d526a
+          path: shared/re-harness
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Configure Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Configure locked tool runner
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: '0.10.12'
+      - name: Verify checkout histories are complete
+        working-directory: x360/mua
+        run: |
+          test "$(git rev-parse --is-shallow-repository)" = false
+          test "$(git -C ../../shared/re-harness rev-parse --is-shallow-repository)" = false
+      - name: Install locked Python environment
+        working-directory: x360/mua
+        run: uv sync --locked
+      - name: Run provisioning, structure, and project-authority gates
+        working-directory: x360/mua
+        run: uv run --frozen python tools/verify.py
+      - name: Configure the explicit unavailable product boundary
+        working-directory: x360/mua
+        run: cmake -S . -B build/ci
