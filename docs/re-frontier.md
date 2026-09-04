@@ -28,13 +28,21 @@ project status.
 - evidence: The current title-neutral inspector reproduces the exact decrypted image, base, entry, sections, imports, and ABI helpers consumed by provisioning.
 - where: tools/provision.py; docs/info/instruments/003-xenonrecomp-xex-inspect.md
 - gap:
-- notes: Preserve this contract while moving its title-neutral owner into xenonport; it does not authorize static guest-code emission.
+- notes: Preserve this contract while moving its title-neutral owner into x360port; it does not authorize static guest-code emission.
+
+### static-product-removal — Delete static execution before dynarec work
+- status: in-progress
+- deps: runtime-image
+- evidence: Static-only untracked generated scratch artifacts and tools were removed; exact media/image evidence remains preserved.
+- where: CMakeLists.txt; project tooling and documentation; intended shared x360port XEX parser
+- gap: Delete every remaining static translator dependency, generated module/function map, switch-target input, static selector/configuration/test, and stale methodology. Move the reusable checked-XEX parser contract to x360port rather than retaining a dependency on the static recompiler repository.
+- notes: The product may fail only at one explicit missing x360port executor boundary. Static execution is never a bridge or oracle.
 
 ### dynarec-entry — Execute the Gold entry through Xenia
 - status: todo
-- deps: runtime-image
+- deps: static-product-removal
 - evidence:
-- where: intended shared xenonport executor; MUA app/title composition
+- where: intended shared x360port executor; MUA app/title composition
 - gap: Map the authenticated image and execute 0x824806D8 with nonzero Xenia JIT blocks until the first named missing service.
 - notes: No PPC interpreter or offline-generated guest module participates.
 
@@ -42,7 +50,7 @@ project status.
 - status: todo
 - deps: dynarec-entry
 - evidence: The exact image contains 206 logical imports whose identity is known from provisioning.
-- where: intended shared xenonport import/service owners; MUA title bindings
+- where: intended shared x360port import/service owners; MUA title bindings
 - gap: Begin at the first reached trap; unknown services remain complete fail-loud errors.
 - notes:
 
@@ -50,7 +58,7 @@ project status.
 - status: todo
 - deps: dynarec-entry
 - evidence:
-- where: intended shared xenonport dispatcher; MUA native game owner
+- where: intended shared x360port dispatcher; MUA native game owner
 - gap: Prove override disabled, enabled, and one-call-original paths through Xenia, including policy-change invalidation.
 - notes:
 

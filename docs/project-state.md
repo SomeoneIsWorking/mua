@@ -8,7 +8,8 @@ same original disc, not an offline-generated guest-code executable.
 
 ## Current focus
 
-None. MUA is deferred until X-Men 2's complete project-goals list is verified.
+S009 is the current focus: preserve exact media/provisioning evidence, then
+delete the remaining static-product surfaces before `x360port` implementation.
 
 ## Capability inventory
 
@@ -16,13 +17,13 @@ None. MUA is deferred until X-Men 2's complete project-goals list is verified.
 | --- | --- | --- | --- | --- |
 | S001 | Exact Gold disc, raw XEX, decrypted image, section, import, and helper identity are known | verified | — | G001, G002 |
 | S002 | Exact media provisioning validates and preserves the runtime image without static generation | partial | S001 | G001, G002 |
-| S003 | `xenonport` maps the image and executes entry `0x824806D8` through Xenia's dynarec | missing | S001 | G001, G002 |
+| S003 | `x360port` maps the image and executes entry `0x824806D8` through Xenia's dynarec | missing | S001, S009 | G001, G002 |
 | S004 | Runtime imports and Xbox services advance from the first named missing service | missing | S003 | G001, G002 |
 | S005 | MUA-native override and original-call dispatch works through the dynarec | missing | S003 | G001, G002 |
 | S006 | MUA consumes the Alchemy engine contracts established in `shared/alchemy` by X-Men 2 | missing | X-Men 2 complete goals | G001, G002, G003 |
 | S007 | Native rendering, audio, input, configuration, saves, and platform composition are implemented | missing | S004, S006 | G003 |
 | S008 | Representative interactive gameplay is conformant and within the host performance budget | missing | S005, S007 | G001, G003 |
-| S009 | The offline generated-PPC pipeline and remaining static product surfaces are absent | partial | S008 | G001 |
+| S009 | The offline generated-PPC pipeline and remaining static product surfaces are absent | partial | — | G001 |
 | S010 | Fresh-clone launcher and asset-free desktop/mobile packages provide player setup | missing | S007, S008 | G001, G003 |
 
 ## Capability details
@@ -42,7 +43,7 @@ integrated, re-gated, committed, or connected to a launcher/runtime consumer.
 ### S003 — Xenia dynarec entry
 
 Missing capability: consume the authenticated runtime image through
-`xenonport`, execute entry `0x824806D8`, count nonzero Xenia JIT blocks, and stop
+`x360port`, execute entry `0x824806D8`, count nonzero Xenia JIT blocks, and stop
 at the first complete missing-service identity.
 
 ### S004 — service frontier
@@ -78,7 +79,9 @@ released host.
 
 Static-only untracked tools and generated scratch artifacts were removed. Gap:
 tracked CMake/documentation and any retained source dependencies still need a
-code-phase audit and deletion after S008; do not regenerate, build, or run them.
+code-phase audit and deletion before S003; do not regenerate, build, or run
+them. Preserve the independently verified media identity and provisioner
+contract rather than the static execution path.
 
 ### S010 — player delivery
 

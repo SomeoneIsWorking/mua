@@ -16,7 +16,7 @@ Title-neutral XEX inspection identifies ten sections, 206 logical imports (196
 functions and ten variables), and all eight save/restore helpers. Binary
 comparison also found 89 of 91 Gears title-address references absent from this
 image, proving that shared Xbox execution cannot contain Gears policy or
-addresses. These are runtime-image and ownership facts for `xenonport`; no
+addresses. These are runtime-image and ownership facts for `x360port`; no
 offline guest-code analysis or generation is part of the product plan.
 
 A bounded, isolated, headless Xenia observation mounted `default.xex`, started
