@@ -7,12 +7,15 @@ before re-deriving a binary or behavioral fact.
 
 ## Product boundary
 
+USER 2026-09-04: "I think you can also do MUA (since Xenia already has dynarec)"
+
+USER 2026-09-04: "And MUA and gears will probably share a x360port project, since gears is in scope, no reason to exclude MUA"
+
 This repository owns the Xbox 360 Gold Edition title layer for a native/dynarec
-PC port. It is deferred until X-Men 2's complete project-goals list is verified.
-Do not begin MUA implementation merely because an initial X-Men 2 JIT milestone
-passes. When MUA resumes, gameplay combines MUA-owned native behavior with guest
-PPC execution through the shared `xenonport` integration of Xenia's runtime
-dynarec.
+PC port. Its break-first dynarec migration is active alongside Gears because
+both consume the same `x360port` integration of Xenia's runtime dynarec. Only
+MUA's adoption of `shared/alchemy` remains deferred until X-Men 2's complete
+project-goals list is verified.
 
 - No gameplay target links or selects a PPC interpreter.
 - Do not generate, compile, or run an offline-translated guest module.
@@ -26,28 +29,32 @@ dynarec.
 The dependency direction is:
 
 ```text
-MUA title adapter -> shared xenonport -> Xenia dynarec
+MUA title adapter -> shared x360port -> Xenia dynarec
                   -> shared alchemy   -> native Alchemy engine services
 ```
 
 MUA never depends on Gears. Shared code contains no MUA addresses or behavior.
-`xenonport` owns the authenticated XEX image, PPC CPU/thread contexts, imports,
+`x360port` owns the authenticated XEX image, PPC CPU/thread contexts, imports,
 device-memory callbacks, dynarec dispatch, and native/original-call boundary.
 MUA owns exact identity, title addresses, native overrides, save namespace,
 input meaning, title-specific Alchemy policy, and conformance evidence.
 `shared/alchemy` is the intended engine owner for both X-Men 2 and MUA, but it is
 not a shared runtime engine today and MUA does not currently consume one. X-Men
-2 establishes and verifies the first common engine contracts. After MUA's
-deferral lifts, MUA must reuse and extend those contracts rather than building a
-second title-local Alchemy engine.
+2 establishes and verifies the first common engine contracts. When that
+Alchemy-specific gate lifts, MUA reuses and extends those contracts rather than
+building a second title-local Alchemy engine. MUA is not a UE3 title and never
+depends on `x360ue3` or `GearsUE3`.
 
-## First implementation discriminator after deferral lifts
+## Break-first migration and first discriminator
 
-Load the authenticated Gold image and execute entry `0x824806D8` through
-Xenia's dynarec until the first named missing service. The report must show
-nonzero translated blocks and a complete refusal for the missing service. This
-is wiring evidence, not permission to declare gameplay or delete remaining
-static product code; retirement requires representative interactive gameplay.
+Preserve exact media/provisioning evidence and any independent native contract,
+then delete every static translator, generated module/function map, switch
+target, static selector/configuration/test, and stale methodology. The build may
+fail only at the explicit missing `x360port` boundary. Then load the
+authenticated Gold image and execute entry `0x824806D8` through Xenia's dynarec
+until the first named missing service. The report must show nonzero translated
+blocks and a complete refusal for the missing service. This is wiring evidence,
+not representative-gameplay conformance.
 
 ## Structure and diagnostics
 

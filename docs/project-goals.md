@@ -9,7 +9,7 @@ Success conditions:
 
 - The gameplay product contains no offline-translated guest code and no PPC
   interpreter in its build, link, selector, or fallback surfaces.
-- `xenonport` authenticates and maps the exact image, executes all non-native
+- `x360port` authenticates and maps the exact image, executes all non-native
   guest paths through Xenia, and provides image-aware native/original calls.
 - Native Alchemy engine services consume the contracts established in
   `shared/alchemy` by X-Men 2; MUA does not create a parallel title-local engine.
@@ -21,7 +21,7 @@ Success conditions:
 ## G002 — Preserve exact title identity and fail-closed service ownership
 
 Keep one MUA-owned profile for disc/XEX/image identity and title policy while
-placing title-neutral Xbox 360 execution and services in `xenonport` and shared
+placing title-neutral Xbox 360 execution and services in `x360port` and shared
 Alchemy engine behavior in `shared/alchemy`.
 
 Success conditions:
@@ -32,6 +32,8 @@ Success conditions:
 - Shared code contains no MUA addresses, hashes, or game policy.
 - `shared/alchemy` exposes only title-neutral contracts proven by both games;
   MUA-specific behavior remains in this repository.
+- MUA is an Alchemy title and has no dependency on `x360ue3` or `GearsUE3`;
+  only the lower `x360port` platform runtime is shared with Gears.
 
 ## G003 — Deliver the intended native product surface
 
@@ -51,6 +53,12 @@ Success conditions:
 
 USER 2026-09-04: "MUA is also deferred until xmen2 is done"
 
-MUA implementation remains deferred until every success condition in X-Men 2's
-project-goals authority is verified. An intermediate X-Men 2 executor, boot, or
-gameplay milestone does not lift this constraint.
+USER 2026-09-04: "I think you can also do MUA (since Xenia already has dynarec)"
+
+USER 2026-09-04: "And MUA and gears will probably share a x360port project, since gears is in scope, no reason to exclude MUA"
+
+The later direction activates MUA's break-first Xbox 360 dynarec migration as a
+first-class `x360port` consumer alongside Gears. The earlier deferral remains
+only for shared-Alchemy adoption: MUA does not move engine behavior into
+`shared/alchemy` until every success condition in X-Men 2's project-goals
+authority is verified.
