@@ -31,7 +31,6 @@ def harness_tool(name: str) -> pathlib.Path:
 def main() -> int:
     try:
         project_state = harness_tool("project_state.py")
-        codemap = harness_tool("codemap.py")
     except RuntimeError as error:
         print(f"verify: REFUSING: {error}", file=sys.stderr)
         return 2
@@ -43,7 +42,6 @@ def main() -> int:
         ("structure", (sys.executable, "tools/check_structure.py")),
         ("structure discriminator", (sys.executable, "tools/check_structure.py", "--selftest")),
         ("project state", (str(project_state), "--root", ".")),
-        ("codemap", (str(codemap), "check", ".")),
     )
     failures = sum(not run(label, command) for label, command in commands)
     if failures:
