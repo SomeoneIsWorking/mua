@@ -1,9 +1,9 @@
 # Marvel: Ultimate Alliance port guidance
 
 The repository-wide rules in `../../AGENTS.md` apply. Start with
-`docs/project-state.md`, then `docs/codemap.md` and `docs/re-frontier.md`. Query
-the registries through `../../shared/re-harness/tools/info.py brief <terms>`
-before re-deriving a binary or behavioral fact.
+`docs/project-state.md`, then `docs/codemap.md` and `docs/re-frontier.md`. Search
+`docs/` with `rg` and definitions with `codemap.py find` before re-deriving a
+binary or behavioral fact.
 
 ## Product boundary
 
