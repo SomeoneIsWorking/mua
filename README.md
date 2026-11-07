@@ -52,3 +52,5 @@ tests or requiring maintainer-only RE tools.
 
 Maintainers run `uv run --frozen python tools/verify.py`; verification is not a
 launcher mode.
+
+Built with AI assistance (Claude and other LLMs).
