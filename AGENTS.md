@@ -1,27 +1,17 @@
-# Marvel: Ultimate Alliance port guidance
-
-The repository-wide rules in `../../AGENTS.md` apply. Start with
-`docs/project-state.md`, then `docs/codemap.md` and `docs/re-frontier.md`. Search
-`docs/` with `rg` and definitions with `codemap.py find` before re-deriving a
-binary or behavioral fact.
-
-## Product boundary
+# Marvel: Ultimate Alliance port
 
 This repository owns the Xbox 360 Gold Edition title layer for a native/dynarec
-PC port. Its break-first dynarec migration is active alongside Gears because
-both consume the same `x360port` integration of Xenia's runtime dynarec. Only
-MUA's adoption of `shared/alchemy` remains deferred until X-Men 2's complete
-project-goals list is verified.
+PC port. Its dynarec migration is active alongside Gears because both consume
+the same `x360port` integration of Xenia's runtime dynarec. Only MUA's adoption
+of `shared/alchemy` remains deferred until X-Men 2's complete project-goals list
+is verified. Execution and migration policy: the `dynarec-port` and
+`dynarec-overrides` skills.
 
-- No gameplay target links or selects a PPC interpreter.
-- Do not resume the removed switch-target, generated-function-map, or static
-  recompiler-input workflows.
 - The primary source is the user-owned Gold disc. The PS2 disc is an auxiliary
   Alchemy/behavior reference, not another shipping target.
 - Preserve exact disc/XEX/image identity and the validated provisioning path.
-  Game bytes and extracted assets remain ignored and outside packages.
 
-The dependency direction is:
+## Dependencies
 
 ```text
 MUA title policy -> alchemy/x360 -> shared x360port -> Xenia dynarec
@@ -43,15 +33,9 @@ second title-local engine. Alchemy does not own both platform frameworks as
 submodules. MUA is not a UE3 title and never depends on `x360ue3` or
 `GearsUE3`.
 
-## Break-first migration and first discriminator
+## First discriminator
 
-Preserve exact media/provisioning evidence and any independent native contract,
-then delete every static translator, generated module/function map, switch
-target, static selector/configuration/test, and stale methodology. The build may
-fail only at the explicit missing `x360port` boundary. Then load the
-authenticated Gold image and execute entry `0x824806D8` through Xenia's dynarec
-until the first named missing service. The report must show nonzero translated
-blocks and a complete refusal for the missing service. This is wiring evidence,
-not representative-gameplay conformance.
-
-Agent runs are headless and bounded.
+Load the authenticated Gold image and execute entry `0x824806D8` through
+Xenia's dynarec until the first named missing service. The report shows nonzero
+translated blocks and a complete refusal for the missing service. This is wiring
+evidence, not representative-gameplay conformance.
